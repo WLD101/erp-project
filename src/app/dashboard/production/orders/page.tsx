@@ -14,22 +14,24 @@ import {
 } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { OrderConfirmButton } from '@/components/production/order-confirm-button'
 
 export default async function ProductionOrdersPage() {
     const supabase = await createClient()
 
-    // Sample production orders
-    const orders = [
-        { id: '1', order_no: 'PO-001', product: 'Fabric A', quantity: 1000, status: 'in_progress', date: '2024-02-01' },
-        { id: '2', order_no: 'PO-002', product: 'Fabric B', quantity: 500, status: 'pending', date: '2024-02-05' },
-    ]
+    // Fetch real production orders from database
+    const { data: orders } = await supabase
+        .from('production_orders')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(50)
 
     return (
         <div className="flex-1 space-y-6 p-8 pt-6">
             <div className="flex items-center justify-between">
                 <div>
                     <h2 className="text-3xl font-bold tracking-tight text-neutral-900">Production Orders</h2>
-                    <p className="text-neutral-600">Manage manufacturing orders and schedules</p>
+                    <p className="text-neutral-600">Manage manufacturing orders and trigger cross-module workflows</p>
                 </div>
                 <Link href="/dashboard/production/orders/new">
                     <Button>
@@ -42,7 +44,9 @@ export default async function ProductionOrdersPage() {
             <Card>
                 <CardHeader>
                     <CardTitle>All Production Orders</CardTitle>
-                    <CardDescription>View and manage production schedules</CardDescription>
+                    <CardDescription>
+                        Confirming an order automatically creates journal entries and checks inventory
+                    </CardDescription>
                 </CardHeader>
                 <CardContent>
                     <div className="rounded-md border">
@@ -58,23 +62,42 @@ export default async function ProductionOrdersPage() {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {orders.length > 0 ? (
+                                {orders && orders.length > 0 ? (
                                     orders.map((order) => (
                                         <TableRow key={order.id}>
-                                            <TableCell className="font-mono text-neutral-900">{order.order_no}</TableCell>
-                                            <TableCell className="font-medium text-neutral-900">{order.product}</TableCell>
-                                            <TableCell className="text-neutral-700">{new Date(order.date).toLocaleDateString()}</TableCell>
-                                            <TableCell className="text-right font-mono text-neutral-900">{order.quantity}</TableCell>
+                                            <TableCell className="font-mono text-neutral-900">
+                                                {order.order_number}
+                                            </TableCell>
+                                            <TableCell className="font-medium text-neutral-900">
+                                                {order.product_id || 'N/A'}
+                                            </TableCell>
+                                            <TableCell className="text-neutral-700">
+                                                {new Date(order.created_at).toLocaleDateString()}
+                                            </TableCell>
+                                            <TableCell className="text-right font-mono text-neutral-900">
+                                                {order.quantity || 0}
+                                            </TableCell>
                                             <TableCell>
                                                 <Badge
-                                                    variant={order.status === 'in_progress' ? 'default' : 'secondary'}
-                                                    className={order.status === 'in_progress' ? 'bg-blue-600' : 'bg-amber-600'}
+                                                    variant={
+                                                        order.status === 'confirmed' ? 'default' :
+                                                            order.status === 'in_progress' ? 'default' :
+                                                                'secondary'
+                                                    }
+                                                    className={
+                                                        order.status === 'confirmed' ? 'bg-emerald-600' :
+                                                            order.status === 'in_progress' ? 'bg-blue-600' :
+                                                                'bg-amber-600'
+                                                    }
                                                 >
-                                                    {order.status.replace('_', ' ')}
+                                                    {order.status?.replace('_', ' ') || 'pending'}
                                                 </Badge>
                                             </TableCell>
                                             <TableCell className="text-right">
-                                                <Button variant="ghost" size="sm">View</Button>
+                                                <OrderConfirmButton
+                                                    orderId={order.id}
+                                                    currentStatus={order.status || 'pending'}
+                                                />
                                             </TableCell>
                                         </TableRow>
                                     ))
