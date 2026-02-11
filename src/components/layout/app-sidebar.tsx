@@ -110,23 +110,51 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
                 <SidebarMenu className="px-2">
                     <SidebarMenuItem>
-                        <div className="px-3 py-2 text-xs font-semibold text-gray-500">Modules</div>
+                        <div className="px-3 py-2 text-xs font-semibold text-gray-500">Business Modules</div>
                     </SidebarMenuItem>
 
-                    {/* Always visible core modules */}
+                    {/* Core Modules - Always visible */}
                     <SidebarMenuItem>
                         <SidebarMenuButton render={
-                            <Link href="#">
-                                <Archive />
-                                <span>Inventory Master</span>
+                            <Link href="/dashboard/finance">
+                                <PieChart />
+                                <span>Finance</span>
                             </Link>
                         } />
                     </SidebarMenuItem>
+
                     <SidebarMenuItem>
                         <SidebarMenuButton render={
-                            <Link href="#">
-                                <PieChart />
-                                <span>Financials</span>
+                            <Link href="/dashboard/inventory">
+                                <Archive />
+                                <span>Inventory</span>
+                            </Link>
+                        } />
+                    </SidebarMenuItem>
+
+                    <SidebarMenuItem>
+                        <SidebarMenuButton render={
+                            <Link href="/dashboard/accounts">
+                                <Users />
+                                <span>User Management</span>
+                            </Link>
+                        } />
+                    </SidebarMenuItem>
+
+                    <SidebarMenuItem>
+                        <SidebarMenuButton render={
+                            <Link href="/dashboard/production">
+                                <Factory />
+                                <span>Production</span>
+                            </Link>
+                        } />
+                    </SidebarMenuItem>
+
+                    <SidebarMenuItem>
+                        <SidebarMenuButton render={
+                            <Link href="/dashboard/quality">
+                                <FileCheck />
+                                <span>Quality Control</span>
                             </Link>
                         } />
                     </SidebarMenuItem>
@@ -135,20 +163,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     {hasFeature('textile_manufacturing') && (
                         <SidebarMenuItem>
                             <SidebarMenuButton className="text-indigo-600 bg-indigo-50 hover:bg-indigo-100" render={
-                                <Link href="#">
+                                <Link href="/dashboard/textile">
                                     <Factory />
-                                    <span>Textile Production</span>
-                                </Link>
-                            } />
-                        </SidebarMenuItem>
-                    )}
-
-                    {hasFeature('payroll') && (
-                        <SidebarMenuItem>
-                            <SidebarMenuButton render={
-                                <Link href="#">
-                                    <Banknote />
-                                    <span>Payroll & HR</span>
+                                    <span>Textile TNA</span>
                                 </Link>
                             } />
                         </SidebarMenuItem>
@@ -157,7 +174,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     {hasFeature('fbr_integration') && (
                         <SidebarMenuItem>
                             <SidebarMenuButton render={
-                                <Link href="#">
+                                <Link href="/dashboard/finance/fbr">
                                     <FileCheck />
                                     <span>FBR E-Invoicing</span>
                                 </Link>
