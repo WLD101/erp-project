@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { getTenants } from "./actions";
 import {
     Table,

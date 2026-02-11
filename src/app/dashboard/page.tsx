@@ -1,5 +1,8 @@
 'use client'
 
+// Force dynamic rendering - this page requires runtime data from Supabase
+export const dynamic = 'force-dynamic'
+
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Plus, CheckCircle2 } from 'lucide-react'
