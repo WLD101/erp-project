@@ -101,8 +101,8 @@ export function TenantList({ onSuccess }: { onSuccess?: () => void }) {
                                                 </AvatarFallback>
                                             </Avatar>
                                             <div className="flex flex-col">
-                                                <span className="font-semibold text-sm">{org.org_name}</span>
-                                                <span className="text-xs text-muted-foreground font-mono">{org.org_id.substring(0, 8)}...</span>
+                                                <span className="font-semibold text-sm text-neutral-900">{org.org_name}</span>
+                                                <span className="text-xs text-neutral-600 font-mono">{org.org_id.substring(0, 8)}...</span>
                                             </div>
                                         </div>
                                     </TableCell>
@@ -113,7 +113,7 @@ export function TenantList({ onSuccess }: { onSuccess?: () => void }) {
                                         }
                                     </TableCell>
                                     <TableCell>
-                                        <div className="flex flex-col text-xs text-muted-foreground">
+                                        <div className="flex flex-col text-xs text-neutral-700">
                                             <span className="flex items-center gap-1"><Shield className="h-3 w-3" /> {org.inventory_rows} items</span>
                                             <span className="flex items-center gap-1"><Users className="h-3 w-3" /> 0 Staff</span>
                                         </div>
@@ -127,7 +127,7 @@ export function TenantList({ onSuccess }: { onSuccess?: () => void }) {
 
                                             <DropdownMenu>
                                                 <DropdownMenuTrigger asChild>
-                                                    <Button variant="ghost" size="icon" className="h-8 w-8"><MoreVertical className="h-4 w-4 text-muted-foreground" /></Button>
+                                                    <Button variant="ghost" size="icon" className="h-8 w-8"><MoreVertical className="h-4 w-4 text-neutral-600" /></Button>
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end">
                                                     <DropdownMenuLabel>Tenant Actions</DropdownMenuLabel>

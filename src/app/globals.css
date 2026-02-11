@@ -5,30 +5,30 @@
 
 :root {
   --background: var(--color-white);
-  --foreground: var(--color-neutral-800);
+  --foreground: var(--color-neutral-900);
   --accent: --alpha(var(--color-black) / 4%);
-  --accent-foreground: var(--color-neutral-800);
-  --border: --alpha(var(--color-black) / 8%);
+  --accent-foreground: var(--color-neutral-900);
+  --border: --alpha(var(--color-black) / 12%);
   --card: var(--color-white);
-  --card-foreground: var(--color-neutral-800);
-  --destructive: var(--color-red-500);
-  --destructive-foreground: var(--color-red-700);
-  --info: var(--color-blue-500);
-  --info-foreground: var(--color-blue-700);
+  --card-foreground: var(--color-neutral-900);
+  --destructive: var(--color-red-600);
+  --destructive-foreground: var(--color-white);
+  --info: var(--color-blue-600);
+  --info-foreground: var(--color-white);
   --input: --alpha(var(--color-black) / 10%);
-  --muted: --alpha(var(--color-black) / 4%);
-  --muted-foreground: color-mix(in srgb, var(--color-neutral-500) 90%, var(--color-black));
+  --muted: var(--color-neutral-100);
+  --muted-foreground: var(--color-neutral-700);
   --popover: var(--color-white);
-  --popover-foreground: var(--color-neutral-800);
-  --primary: var(--color-neutral-800);
-  --primary-foreground: var(--color-neutral-50);
+  --popover-foreground: var(--color-neutral-900);
+  --primary: var(--color-neutral-900);
+  --primary-foreground: var(--color-white);
   --ring: var(--color-neutral-400);
-  --secondary: --alpha(var(--color-black) / 4%);
-  --secondary-foreground: var(--color-neutral-800);
-  --success: var(--color-emerald-500);
-  --success-foreground: var(--color-emerald-700);
-  --warning: var(--color-amber-500);
-  --warning-foreground: var(--color-amber-700);
+  --secondary: var(--color-neutral-100);
+  --secondary-foreground: var(--color-neutral-900);
+  --success: var(--color-emerald-600);
+  --success-foreground: var(--color-white);
+  --warning: var(--color-amber-600);
+  --warning-foreground: var(--color-white);
 }
 
 @theme inline {
