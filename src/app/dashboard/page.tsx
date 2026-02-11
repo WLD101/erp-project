@@ -13,26 +13,49 @@ import { Input } from '@/components/ui/input'
 import { Loader2 } from 'lucide-react'
 import { StatsCards } from '@/components/dashboard/stats-cards'
 import { TenantList } from '@/components/dashboard/tenant-list'
+import { TenantDashboard } from '@/components/dashboard/tenant-dashboard'
 
 export default function DashboardOrchestrator() {
     const [role, setRole] = useState<string | null>(null)
     const [mockMode, setMockMode] = useState(false)
+    const [loading, setLoading] = useState(true)
     const supabase = createClient()
 
     useEffect(() => {
         async function init() {
-            const isMock = process.env.NEXT_PUBLIC_MOCK_SUPER_ADMIN === 'true' // Should be true
+            const isMock = process.env.NEXT_PUBLIC_MOCK_SUPER_ADMIN === 'true'
             setMockMode(isMock)
+
             if (isMock) {
                 setRole('super_admin')
+                setLoading(false)
+            } else {
+                // Get actual user role from database
+                const { data: { user } } = await supabase.auth.getUser()
+                if (user) {
+                    const { data: profile } = await supabase
+                        .from('user_profiles')
+                        .select('role')
+                        .eq('id', user.id)
+                        .single()
+
+                    setRole(profile?.role || 'staff')
+                }
+                setLoading(false)
             }
         }
         init()
     }, [])
 
+    if (loading) {
+        return <div className="p-8 text-center text-gray-500">Initializing...</div>
+    }
+
+    // Super Admin sees Control Tower
     if (role === 'super_admin') return <SuperAdminControlTower />
 
-    return <div className="p-8 text-center text-gray-500">Initializing...</div>
+    // Regular users (admin, staff, viewer) see Tenant Dashboard
+    return <TenantDashboard />
 }
 
 function SuperAdminControlTower() {
